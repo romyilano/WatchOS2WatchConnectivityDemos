@@ -24,8 +24,18 @@
         session.delegate = self;
         [session activateSession];
     }
+    NSError *error = nil;
+    
+    [[WCSession defaultSession] updateApplicationContext:@{@"text" : @"boo"} error:&error];
+    
+    if (error) {
+        
+    }
 }
 
+#pragma mark - WatchKitDelegate Method(s)
+
+// Background Transfer
 - (void)session:(nonnull WCSession *)session didReceiveApplicationContext:(nonnull NSDictionary<NSString *,id> *)applicationContext {
     
     NSString *emoji = [applicationContext objectForKey:@"emoji"];

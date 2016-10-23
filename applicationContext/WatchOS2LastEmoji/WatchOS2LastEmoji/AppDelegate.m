@@ -7,8 +7,10 @@
 //
 
 #import "AppDelegate.h"
-
-@interface AppDelegate ()
+@import WatchKit;
+@import WatchConnectivity;
+@interface AppDelegate () <WCSessionDelegate>
+@property (strong, nonatomic) WCSession *session;
 
 @end
 
@@ -17,6 +19,14 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    if ([WCSession isSupported]) {
+        self.session = [WCSession defaultSession];
+        self.session.delegate = self;
+        [self.session activateSession];
+    }
+    
+    [[WCSession defaultSession] updateApplicationContext:@{@"text" : @"cute"} error:nil];
+    
     return YES;
 }
 
